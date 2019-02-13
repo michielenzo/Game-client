@@ -1,40 +1,46 @@
 package idema.michiel.lobby;
 
 import javafx.application.Application;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class LobbyView extends Application {
 
     private final TableView table = new TableView();
+    public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
 
     public static void launch(){
         Application.launch();
     }
 
     public void start(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Lobby");
+        VBox root = new VBox();
+        Scene scene = new Scene(root);
 
-        table.setEditable(true);
-
-        TableColumn PlayerColumn = new TableColumn("First Name");
-
-        table.getColumns().addAll(PlayerColumn);
-
-        final VBox vbox = new VBox();
-        vbox.getChildren().addAll(table);
-
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        Label playerTableLabel = new Label("Connected players");
+        playerTableLabel.setFont(new Font("Arial", 20));
+        root.getChildren().add(playerTableLabel);
+        playerTable(root);
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void playerTable(VBox root) {
+        TableColumn playerColumn = new TableColumn("Player");
+        playerColumn.setCellValueFactory(new PropertyValueFactory<TablePlayer, String>("name"));
+        table.getColumns().add(playerColumn);
+        root.getChildren().add(table);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setItems(tableData);
     }
 
 }
