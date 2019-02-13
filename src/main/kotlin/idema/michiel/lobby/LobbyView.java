@@ -25,13 +25,17 @@ public class LobbyView extends Application {
         VBox root = new VBox();
         Scene scene = new Scene(root);
 
-        Label playerTableLabel = new Label("Connected players");
-        playerTableLabel.setFont(new Font("Arial", 20));
-        root.getChildren().add(playerTableLabel);
+        playerTableLabel(root);
         playerTable(root);
 
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void playerTableLabel(VBox root) {
+        Label playerTableLabel = new Label("Connected players");
+        playerTableLabel.setFont(new Font("Arial", 20));
+        root.getChildren().add(playerTableLabel);
     }
 
     private void playerTable(VBox root) {
