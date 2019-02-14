@@ -1,5 +1,12 @@
 package idema.michiel.network
 
+import com.google.gson.Gson
+import idema.michiel.game.dto.SendGameStateToClientsDTO
+import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
+import idema.michiel.newspaper.MessageType
+import idema.michiel.newspaper.network.NetworkNewsPaper
+import idema.michiel.utilities.DTO
+import idema.michiel.utilities.JSON
 import org.eclipse.jetty.websocket.api.Session
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect
@@ -7,7 +14,6 @@ import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage
 import org.eclipse.jetty.websocket.api.annotations.WebSocket
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest
 import org.eclipse.jetty.websocket.client.WebSocketClient
-import java.lang.Exception
 import java.net.URI
 
 @WebSocket
@@ -37,12 +43,39 @@ class WebSocketClientEndPoint{
 
     @OnWebSocketMessage
     fun onMessage(message: String){
-        println(message)
+        buildDTO(message).also {
+            it?: return
+            NetworkNewsPaper.broadcast(it)
+        }
     }
 
     @OnWebSocketClose
     fun onClose(statusCode: Int, reason: String){
 
+    }
+
+    private fun buildDTO(message: String): DTO? {
+        JSON.convertToObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
+            return when (it) {
+                MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> buildSendLobbyStateToClientsDTO(message)
+                MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> buildSendGameStateToClientsDTO(message)
+                else -> {
+                    throw Exception(String()
+                            .plus("Invalid message received: ")
+                            .plus(message)
+                            .plus("\n"))
+                }
+            }
+        }
+        return null
+    }
+
+    private fun buildSendGameStateToClientsDTO(message: String): DTO {
+        return Gson().fromJson(message, SendGameStateToClientsDTO::class.java)
+    }
+
+    private fun buildSendLobbyStateToClientsDTO(message: String): DTO {
+        return Gson().fromJson(message, SendLobbyStateToClientsDTO::class.java)
     }
 
 }

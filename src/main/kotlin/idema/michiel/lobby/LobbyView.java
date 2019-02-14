@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 
 public class LobbyView extends Application {
 
+    private LobbyProxy proxy = new LobbyProxy(this);
+
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
 
