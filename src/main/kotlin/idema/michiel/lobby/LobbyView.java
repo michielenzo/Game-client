@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class LobbyView extends Application {
 
     private LobbyProxy proxy = new LobbyProxy(this);
@@ -32,6 +34,7 @@ public class LobbyView extends Application {
 
         stage.setScene(scene);
         stage.show();
+
     }
 
     private void playerTableLabel(VBox root) {
