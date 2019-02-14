@@ -1,18 +1,20 @@
 package idema.michiel.lobby;
 
+import idema.michiel.network.WebSocketClientEndPoint;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-import java.awt.*;
 
 public class LobbyView extends Application {
 
@@ -31,10 +33,21 @@ public class LobbyView extends Application {
 
         playerTableLabel(root);
         playerTable(root);
+        testButton(root);
 
         stage.setScene(scene);
         stage.show();
+        new WebSocketClientEndPoint();
+    }
 
+    private void testButton(VBox root) {
+        Button testButton = new Button("test");
+        testButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                System.out.println("test button clicked");
+            }
+        });
+        root.getChildren().add(testButton);
     }
 
     private void playerTableLabel(VBox root) {
