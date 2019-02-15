@@ -1,21 +1,27 @@
 package idema.michiel.utilities
 
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 interface IJSON{
-    fun convertToObject(string: String): JsonObject
-    fun convertToString(json: JsonObject): String
+    fun convertStrinToGSONObject(string: String): JsonObject
+    fun convertGSONObjectToString(json: JsonObject): String
+    fun convertDTOObjectToString(dto: DTO): String
 }
 
 
 object JSON: IJSON {
 
-    override fun convertToString(json: JsonObject): String {
+    override fun convertDTOObjectToString(dto: DTO): String {
+       return Gson().toJson(dto)
+    }
+
+    override fun convertGSONObjectToString(json: JsonObject): String {
        return json.toString()
     }
 
-    override fun convertToObject(string: String): JsonObject {
+    override fun convertStrinToGSONObject(string: String): JsonObject {
         return JsonParser().parse(string).asJsonObject
     }
 

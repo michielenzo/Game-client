@@ -4,6 +4,8 @@ import com.google.gson.Gson
 import idema.michiel.game.dto.SendGameStateToClientsDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.newspaper.MessageType
+import idema.michiel.newspaper.lobby.ILobbyNewsPaperSubscriber
+import idema.michiel.newspaper.lobby.LobbyNewsPaper
 import idema.michiel.newspaper.network.NetworkNewsPaper
 import idema.michiel.utilities.DTO
 import idema.michiel.utilities.JSON
@@ -17,12 +19,13 @@ import org.eclipse.jetty.websocket.client.WebSocketClient
 import java.net.URI
 
 @WebSocket
-class WebSocketClientEndPoint{
+class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber{
 
     private val serverUri = "ws://localhost:8080/player"
     private lateinit var session: Session
 
     init {
+        LobbyNewsPaper.subscribe(this)
         try {
             WebSocketClient().also { clientServer ->
                 clientServer.start()
@@ -54,8 +57,12 @@ class WebSocketClientEndPoint{
 
     }
 
+    override fun notifyLobbyNews(dto: DTO) {
+        session.remote.sendString(JSON.convertDTOObjectToString(dto))
+    }
+
     private fun buildDTO(message: String): DTO? {
-        JSON.convertToObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
+        JSON.convertStrinToGSONObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
             return when (it) {
                 MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> buildSendLobbyStateToClientsDTO(message)
                 MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> buildSendGameStateToClientsDTO(message)

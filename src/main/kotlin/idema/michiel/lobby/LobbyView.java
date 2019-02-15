@@ -1,6 +1,8 @@
 package idema.michiel.lobby;
 
+import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
+import idema.michiel.newspaper.lobby.LobbyNewsPaper;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +48,7 @@ public class LobbyView extends Application {
         playButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 System.out.println("Play button clicked");
+                LobbyNewsPaper.INSTANCE.broadcast(new StartGameToServerDTO());
             }
         });
         root.getChildren().add(playButton);
