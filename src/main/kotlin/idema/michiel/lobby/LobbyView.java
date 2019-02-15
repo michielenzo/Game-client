@@ -33,11 +33,22 @@ public class LobbyView extends Application {
 
         playerTableLabel(root);
         playerTable(root);
+        playButton(root);
         testButton(root);
 
         stage.setScene(scene);
         stage.show();
         new WebSocketClientEndPoint();
+    }
+
+    private void playButton(VBox root) {
+        Button playButton = new Button("Play");
+        playButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                System.out.println("Play button clicked");
+            }
+        });
+        root.getChildren().add(playButton);
     }
 
     private void testButton(VBox root) {
