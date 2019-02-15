@@ -62,7 +62,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber{
     }
 
     private fun buildDTO(message: String): DTO? {
-        JSON.convertStrinToGSONObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
+        JSON.convertStringToGSONObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
             return when (it) {
                 MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> buildSendLobbyStateToClientsDTO(message)
                 MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> buildSendGameStateToClientsDTO(message)

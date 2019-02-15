@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 interface IJSON{
-    fun convertStrinToGSONObject(string: String): JsonObject
+    fun convertStringToGSONObject(string: String): JsonObject
     fun convertGSONObjectToString(json: JsonObject): String
     fun convertDTOObjectToString(dto: DTO): String
 }
@@ -21,7 +21,7 @@ object JSON: IJSON {
        return json.toString()
     }
 
-    override fun convertStrinToGSONObject(string: String): JsonObject {
+    override fun convertStringToGSONObject(string: String): JsonObject {
         return JsonParser().parse(string).asJsonObject
     }
 
