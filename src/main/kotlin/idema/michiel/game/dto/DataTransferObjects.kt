@@ -8,4 +8,8 @@ data class SendGameStateToClientsDTO(val gameState: GameStateDTO,
 
 data class GameStateDTO(val players: MutableList<PlayerDTO> = mutableListOf()): DTO()
 
-data class PlayerDTO(val sessionId: String, @Volatile var xPosition: Int, @Volatile var yPosition: Int): DTO()
+data class PlayerDTO(val sessionId: String,
+                     @Volatile var xPosition: Int,
+                     @Volatile var yPosition: Int,
+                     val width: Int,
+                     val height: Int): DTO()

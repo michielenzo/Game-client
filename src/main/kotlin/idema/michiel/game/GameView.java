@@ -1,5 +1,6 @@
 package idema.michiel.game;
 
+import idema.michiel.game.dto.PlayerDTO;
 import idema.michiel.game.dto.SendGameStateToClientsDTO;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -7,14 +8,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-public class GameState extends Scene {
+import java.util.List;
+
+public class GameView extends Scene {
 
     private GraphicsContext ctx = null;
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 500;
 
-    public GameState(VBox root, SendGameStateToClientsDTO dto) {
+    public GameView(VBox root, SendGameStateToClientsDTO dto) {
         super(root);
         gameCanvas(root);
         renderGameState(dto);
@@ -27,8 +30,14 @@ public class GameState extends Scene {
     }
 
     private void renderGameState(SendGameStateToClientsDTO dto) {
+        renderPlayers(dto.getGameState().getPlayers());
+    }
+
+    private void renderPlayers(List<PlayerDTO> players) {
         ctx.setFill(Color.FIREBRICK);
-        ctx.fillRect(20,20,100,100);
+        for(PlayerDTO player: players){
+            ctx.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
+        }
     }
 
 }
