@@ -4,6 +4,7 @@ import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
 import idema.michiel.newspaper.lobby.LobbyNewsPaper;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -22,6 +23,8 @@ public class LobbyView extends Application {
 
     private LobbyProxy proxy = new LobbyProxy(this);
 
+    public Stage stage;
+
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
 
@@ -30,6 +33,7 @@ public class LobbyView extends Application {
     }
 
     public void start(Stage stage) {
+        this.stage = stage;
         VBox root = new VBox();
         Scene scene = new Scene(root);
 
