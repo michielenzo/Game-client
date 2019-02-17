@@ -3,17 +3,16 @@ package idema.michiel.game;
 import idema.michiel.game.dto.PlayerDTO;
 import idema.michiel.game.dto.SendGameStateToClientsDTO;
 import idema.michiel.game.dto.SendInputStateToServerDTO;
+import idema.michiel.newspaper.MessageType;
+import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.util.EventListener;
 import java.util.List;
 
 public class GameView extends Scene {
@@ -34,6 +33,10 @@ public class GameView extends Scene {
 
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
+                boolean wBefore = InputState.INSTANCE.getWKey();
+                boolean aBefore = InputState.INSTANCE.getAKey();
+                boolean sBefore = InputState.INSTANCE.getSKey();
+                boolean dBefore = InputState.INSTANCE.getDKey();
                 switch (event.getCode().getName().charAt(0)){
                     case 'W':
                         InputState.INSTANCE.setWKey(true);
@@ -47,7 +50,15 @@ public class GameView extends Scene {
                     case 'D':
                         InputState.INSTANCE.setDKey(true);
                 }
-                buildSendInputStateToServerDTO();//TODO broadcast
+                boolean wAfter = InputState.INSTANCE.getWKey();
+                boolean aAfter = InputState.INSTANCE.getAKey();
+                boolean sAfter = InputState.INSTANCE.getSKey();
+                boolean dAfter = InputState.INSTANCE.getDKey();
+                if(wBefore != wAfter || aBefore != aAfter ||
+                   sBefore != sAfter || dBefore != dAfter
+                ){
+                    PlayerInputNewsPaper.INSTANCE.broadcast(buildSendInputStateToServerDTO());
+                }
             }
         });
 
@@ -66,7 +77,7 @@ public class GameView extends Scene {
                     case 'D':
                         InputState.INSTANCE.setDKey(false);
                 }
-                buildSendInputStateToServerDTO();//TODO broadcast
+                PlayerInputNewsPaper.INSTANCE.broadcast(buildSendInputStateToServerDTO());
             }
         });
 
@@ -91,7 +102,8 @@ public class GameView extends Scene {
                 InputState.INSTANCE.getWKey(),
                 InputState.INSTANCE.getAKey(),
                 InputState.INSTANCE.getSKey(),
-                InputState.INSTANCE.getDKey());
+                InputState.INSTANCE.getDKey(),
+                MessageType.SEND_INPUT_STATE_TO_SERVER.getValue());
     }
 
 

@@ -17,4 +17,5 @@ data class PlayerDTO(val sessionId: String,
 data class SendInputStateToServerDTO(val wKey: Boolean,
                                      val aKey: Boolean,
                                      val sKey: Boolean,
-                                     val dKey: Boolean): DTO()
+                                     val dKey: Boolean,
+                                     val messageType: String = MessageType.SEND_INPUT_STATE_TO_SERVER.value): DTO()
