@@ -21,8 +21,8 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
 
     private GraphicsContext ctx = null;
 
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 1100;
+    public static final int HEIGHT = 700;
 
     public GameView(VBox root, SendGameStateToClientsDTO dto) {
         super(root);
@@ -37,7 +37,7 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
     }
 
     private void gameCanvas(VBox root) {
-        Canvas canvas = new Canvas(800, 500);
+        Canvas canvas = new Canvas(WIDTH, HEIGHT);
 
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
