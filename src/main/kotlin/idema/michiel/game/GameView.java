@@ -1,9 +1,6 @@
 package idema.michiel.game;
 
-import idema.michiel.game.dto.GameStateDTO;
-import idema.michiel.game.dto.PlayerDTO;
-import idema.michiel.game.dto.SendGameStateToClientsDTO;
-import idema.michiel.game.dto.SendInputStateToServerDTO;
+import idema.michiel.game.dto.*;
 import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber;
 import idema.michiel.newspaper.network.NetworkNewsPaper;
@@ -24,8 +21,8 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
 
     private GraphicsContext ctx = null;
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 500;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 600;
 
     public GameView(VBox root, SendGameStateToClientsDTO dto) {
         super(root);
@@ -38,6 +35,7 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
             if(ctx != null)renderGameState((SendGameStateToClientsDTO)dto);
         }
     }
+
     private void gameCanvas(VBox root) {
         Canvas canvas = new Canvas(800, 500);
 
@@ -99,17 +97,33 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
     private void renderGameState(SendGameStateToClientsDTO dto) {
         background();
         renderPlayers(dto.getGameState().getPlayers());
+        renderFireBalls(dto.getGameState().getFireBalls());
     }
 
+
+
     private void background() {
-        ctx.setFill(Color.WHITE);
+        ctx.setFill(Color.BLACK);
         ctx.fillRect(0,0,WIDTH,HEIGHT);
     }
 
     private void renderPlayers(List<PlayerDTO> players) {
-        ctx.setFill(Color.FIREBRICK);
+        ctx.setFill(Color.BLUEVIOLET);
         for(PlayerDTO player: players){
-            ctx.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
+            ctx.fillRect(player.getXPosition() - player.getWidth()/2,
+                         player.getYPosition() - player.getHeight()/2,
+                         player.getWidth(),
+                         player.getHeight());
+        }
+    }
+
+    private void renderFireBalls(List<FireBallDTO> fireBalls) {
+        ctx.setFill(Color.FIREBRICK);
+        for(FireBallDTO fireBall: fireBalls){
+            ctx.fillOval(fireBall.getXPosition() - fireBall.getDiameter()/2,
+                         fireBall.getYPosition() - fireBall.getDiameter()/2,
+                         fireBall.getDiameter(),
+                         fireBall.getDiameter());
         }
     }
 
