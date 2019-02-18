@@ -31,7 +31,6 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
         super(root);
         NetworkNewsPaper.INSTANCE.subscribe(this);
         gameCanvas(root);
-        renderGameState(dto);
     }
 
     public void notifyNetworkNews(@NotNull DTO dto) {
