@@ -36,10 +36,9 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
 
     public void notifyNetworkNews(@NotNull DTO dto) {
         if(dto instanceof SendGameStateToClientsDTO){
-            renderGameState((SendGameStateToClientsDTO)dto);
+            if(ctx != null)renderGameState((SendGameStateToClientsDTO)dto);
         }
     }
-
     private void gameCanvas(VBox root) {
         Canvas canvas = new Canvas(800, 500);
 

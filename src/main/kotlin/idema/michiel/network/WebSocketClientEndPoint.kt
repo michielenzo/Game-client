@@ -23,7 +23,7 @@ import java.net.URI
 @WebSocket
 class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperSubscriber{
 
-    private val serverUri = "ws://localhost:8080/player"
+    private val serverUri = "ws://192.168.1.226:8080/player"
     private lateinit var session: Session
 
     init {
