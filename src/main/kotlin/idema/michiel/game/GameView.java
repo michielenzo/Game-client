@@ -1,10 +1,14 @@
 package idema.michiel.game;
 
+import idema.michiel.game.dto.GameStateDTO;
 import idema.michiel.game.dto.PlayerDTO;
 import idema.michiel.game.dto.SendGameStateToClientsDTO;
 import idema.michiel.game.dto.SendInputStateToServerDTO;
 import idema.michiel.newspaper.MessageType;
+import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber;
+import idema.michiel.newspaper.network.NetworkNewsPaper;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
+import idema.michiel.utilities.DTO;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,10 +16,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class GameView extends Scene {
+public class GameView extends Scene implements INetworkNewsPaperSubscriber {
 
     private GraphicsContext ctx = null;
 
@@ -24,8 +29,15 @@ public class GameView extends Scene {
 
     public GameView(VBox root, SendGameStateToClientsDTO dto) {
         super(root);
+        NetworkNewsPaper.INSTANCE.subscribe(this);
         gameCanvas(root);
         renderGameState(dto);
+    }
+
+    public void notifyNetworkNews(@NotNull DTO dto) {
+        if(dto instanceof SendGameStateToClientsDTO){
+            renderGameState((SendGameStateToClientsDTO)dto);
+        }
     }
 
     private void gameCanvas(VBox root) {
@@ -33,10 +45,10 @@ public class GameView extends Scene {
 
         canvas.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
-                boolean wBefore = InputState.INSTANCE.getWKey();
-                boolean aBefore = InputState.INSTANCE.getAKey();
-                boolean sBefore = InputState.INSTANCE.getSKey();
-                boolean dBefore = InputState.INSTANCE.getDKey();
+                final boolean wBefore = InputState.INSTANCE.getWKey();
+                final boolean aBefore = InputState.INSTANCE.getAKey();
+                final boolean sBefore = InputState.INSTANCE.getSKey();
+                final boolean dBefore = InputState.INSTANCE.getDKey();
                 switch (event.getCode().getName().charAt(0)){
                     case 'W':
                         InputState.INSTANCE.setWKey(true);
@@ -50,10 +62,10 @@ public class GameView extends Scene {
                     case 'D':
                         InputState.INSTANCE.setDKey(true);
                 }
-                boolean wAfter = InputState.INSTANCE.getWKey();
-                boolean aAfter = InputState.INSTANCE.getAKey();
-                boolean sAfter = InputState.INSTANCE.getSKey();
-                boolean dAfter = InputState.INSTANCE.getDKey();
+                final boolean wAfter = InputState.INSTANCE.getWKey();
+                final boolean aAfter = InputState.INSTANCE.getAKey();
+                final boolean sAfter = InputState.INSTANCE.getSKey();
+                final boolean dAfter = InputState.INSTANCE.getDKey();
                 if(wBefore != wAfter || aBefore != aAfter ||
                    sBefore != sAfter || dBefore != dAfter
                 ){
@@ -87,7 +99,13 @@ public class GameView extends Scene {
     }
 
     private void renderGameState(SendGameStateToClientsDTO dto) {
+        background();
         renderPlayers(dto.getGameState().getPlayers());
+    }
+
+    private void background() {
+        ctx.setFill(Color.WHITE);
+        ctx.fillRect(0,0,WIDTH,HEIGHT);
     }
 
     private void renderPlayers(List<PlayerDTO> players) {
@@ -105,7 +123,6 @@ public class GameView extends Scene {
                 InputState.INSTANCE.getDKey(),
                 MessageType.SEND_INPUT_STATE_TO_SERVER.getValue());
     }
-
 
 
 }
