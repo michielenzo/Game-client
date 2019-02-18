@@ -110,8 +110,8 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
     private void renderPlayers(List<PlayerDTO> players) {
         ctx.setFill(Color.BLUEVIOLET);
         for(PlayerDTO player: players){
-            ctx.fillRect(player.getXPosition() - player.getWidth()/2,
-                         player.getYPosition() - player.getHeight()/2,
+            ctx.fillRect(player.getXPosition(),
+                         player.getYPosition(),
                          player.getWidth(),
                          player.getHeight());
         }
