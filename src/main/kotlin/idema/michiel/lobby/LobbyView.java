@@ -21,8 +21,6 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class LobbyView extends Application {
 
     private LobbyProxy proxy = new LobbyProxy(this);

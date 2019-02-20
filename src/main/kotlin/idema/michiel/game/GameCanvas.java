@@ -28,6 +28,8 @@ class GameCanvas extends Canvas {
 
     private Image deathPlayerImage;
 
+    private Image backgroundImage;
+
     private final int playerLivesDivX = 20;
     private final int playerLivesDivY = 35;
 
@@ -37,6 +39,7 @@ class GameCanvas extends Canvas {
         ctx = getGraphicsContext2D();
         setupInput();
         loadHeartImage();
+        loadBackgroundImage();
     }
 
     private void setupInput() {
@@ -110,6 +113,14 @@ class GameCanvas extends Canvas {
         }
     }
 
+    private void loadBackgroundImage(){
+        backgroundImage = new Image(GameCanvas.class.getResource("/images/space3.png").toExternalForm(),
+                WIDTH,
+                HEIGHT,
+                false,
+                false);
+    }
+
     void render(SendGameStateToClientsDTO dto){
         renderGameState(dto);
         renderHUD(dto);
@@ -148,8 +159,7 @@ class GameCanvas extends Canvas {
 
     private void background() {
         ctx.setGlobalAlpha(1);
-        ctx.setFill(Color.BLACK);
-        ctx.fillRect(0,0,WIDTH,HEIGHT);
+        ctx.drawImage(backgroundImage,0,0);
     }
 
     private void renderPlayers(List<PlayerDTO> players) {
