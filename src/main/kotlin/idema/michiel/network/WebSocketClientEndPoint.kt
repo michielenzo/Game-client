@@ -2,7 +2,9 @@ package idema.michiel.network
 
 import com.google.gson.Gson
 import idema.michiel.game.dto.SendGameStateToClientsDTO
+import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
+import idema.michiel.lobby.dto.StartGameToServerDTO
 import idema.michiel.newspaper.MessageType
 import idema.michiel.newspaper.lobby.ILobbyNewsPaperSubscriber
 import idema.michiel.newspaper.lobby.LobbyNewsPaper
@@ -49,6 +51,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
 
     @OnWebSocketMessage
     fun onMessage(message: String){
+        println(message)
         buildDTO(message).also {
             it?: return
             NetworkNewsPaper.broadcast(it)
@@ -61,7 +64,11 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
     }
 
     override fun notifyLobbyNews(dto: DTO) {
-        session.remote.sendString(JSON.convertDTOObjectToString(dto))
+        when(dto){
+            is StartGameToServerDTO -> session.remote.sendString(JSON.convertDTOObjectToString(dto))
+            is ChooseNameToServerDTO -> session.remote.sendString(JSON.convertDTOObjectToString(dto))
+        }
+
     }
 
     override fun notifyPlayerInputNews(dto: DTO) {

@@ -129,7 +129,7 @@ class GameCanvas extends Canvas {
         ctx.setGlobalAlpha(0.5);
         ctx.setFill(Color.WHITE);
         for(int i = 0; i < players.size(); i++){
-            ctx.fillText(players.get(i).getSessionId().substring(0,9),
+            ctx.fillText(players.get(i).getName(),
                          playerLivesDivX,
                       playerLivesDivY+marginTopName + i*(heartHeight+marginBottomHeart));
         }

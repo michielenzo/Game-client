@@ -1,7 +1,9 @@
 package idema.michiel.lobby;
 
+import idema.michiel.lobby.dto.ChooseNameToServerDTO;
 import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
+import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.lobby.LobbyNewsPaper;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,12 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -27,6 +27,7 @@ public class LobbyView extends Application {
 
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
+    private int maxLengthPlayerName = 10;
 
     public static void launch(){
         Application.launch();
@@ -39,12 +40,49 @@ public class LobbyView extends Application {
 
         playerTableLabel(root);
         playerTable(root);
+        chooseNameForm(root);
         playButton(root);
         testButton(root);
 
         stage.setScene(scene);
         stage.show();
         new WebSocketClientEndPoint();
+    }
+
+    private void chooseNameForm(VBox root) {
+        HBox chooseNameFormDiv = new HBox();
+        TextField textField = chooseNameTextField(chooseNameFormDiv);
+        chooseNameButton(chooseNameFormDiv, textField);
+        root.getChildren().add(chooseNameFormDiv);
+    }
+
+    private void chooseNameButton(HBox div, final TextField textField) {
+        Button button = new Button("Choose name");
+        button.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                if(isChosenNameValid(textField.getText())){
+                    ChooseNameToServerDTO dto = new ChooseNameToServerDTO(null,
+                            textField.getText(),
+                            MessageType.CHOOSE_NAME_TO_SERVER.getValue());
+                    LobbyNewsPaper.INSTANCE.broadcast(dto);
+                }else{
+                    String error = "Invalid name, too long (max 10)";
+                    Alert alert = new Alert(Alert.AlertType.ERROR, error);
+                    alert.showAndWait();
+                }
+            }
+        });
+        div.getChildren().add(button);
+    }
+
+    private boolean isChosenNameValid(String text) {
+        return text.length() <= maxLengthPlayerName;
+    }
+
+    private TextField chooseNameTextField(HBox div) {
+        TextField textField = new TextField();
+        div.getChildren().add(textField);
+        return textField;
     }
 
     private void playButton(VBox root) {
