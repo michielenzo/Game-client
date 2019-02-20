@@ -6,7 +6,6 @@ import idema.michiel.network.WebSocketClientEndPoint;
 import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.lobby.LobbyNewsPaper;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -27,7 +26,7 @@ public class LobbyView extends Application {
 
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
-    private int maxLengthPlayerName = 10;
+    public static final int MAX_LENGTH_PLAYER_NAME = 10;
 
     public static void launch(){
         Application.launch();
@@ -76,7 +75,7 @@ public class LobbyView extends Application {
     }
 
     private boolean isChosenNameValid(String text) {
-        return text.length() <= maxLengthPlayerName;
+        return text.length() <= MAX_LENGTH_PLAYER_NAME;
     }
 
     private TextField chooseNameTextField(HBox div) {

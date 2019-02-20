@@ -3,6 +3,7 @@ package idema.michiel.game;
 import idema.michiel.game.dto.FireBallDTO;
 import idema.michiel.game.dto.PlayerDTO;
 import idema.michiel.game.dto.SendGameStateToClientsDTO;
+import idema.michiel.lobby.LobbyView;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -28,7 +29,7 @@ class GameCanvas extends Canvas {
     private Image deathPlayerImage;
 
     private final int playerLivesDivX = 20;
-    private final int playerLivesDivY = 20;
+    private final int playerLivesDivY = 35;
 
     GameCanvas(GameView gameView){
         super(WIDTH, HEIGHT);
@@ -123,21 +124,23 @@ class GameCanvas extends Canvas {
     private void renderHUD(SendGameStateToClientsDTO dto){
         final List<PlayerDTO> players = dto.getGameState().getPlayers();
         final int marginRightHeart = 7;
-        final int marginBottomHeart = 10;
-        final int nameSpace = 65;
-        final int marginTopName = 20;
+        final int marginBottomHeart = 15;
+        final int marginBottomName = 5;
         ctx.setGlobalAlpha(0.5);
         ctx.setFill(Color.WHITE);
         for(int i = 0; i < players.size(); i++){
-            ctx.fillText(players.get(i).getName(),
+            String name = players.get(i).getName();
+            if(name.length() > LobbyView.MAX_LENGTH_PLAYER_NAME)
+                name = name.substring(0,LobbyView.MAX_LENGTH_PLAYER_NAME - 1);
+            ctx.fillText(name,
                          playerLivesDivX,
-                      playerLivesDivY+marginTopName + i*(heartHeight+marginBottomHeart));
+                      playerLivesDivY-marginBottomName + i*(heartHeight+marginBottomHeart));
         }
 
         for(int i = 0; i < players.size(); i++){
             for(int j = 0; j < players.get(i).getHealth(); j++){
                 ctx.drawImage(heartImage,
-                           nameSpace+playerLivesDivX + j*(heartWidth+marginRightHeart),
+                           playerLivesDivX + j*(heartWidth+marginRightHeart),
                            playerLivesDivY + i*(heartHeight+marginBottomHeart));
             }
         }
@@ -152,11 +155,16 @@ class GameCanvas extends Canvas {
     private void renderPlayers(List<PlayerDTO> players) {
         loadDeathPlayerImage(players);
         ctx.setGlobalAlpha(1);
-        ctx.setFill(Color.BLUEVIOLET);
+
         for(PlayerDTO player: players){
             if(player.getHealth() <= 0){
+                ctx.setFill(Color.WHITE);
+                ctx.fillText(player.getName(),player.getXPosition(),player.getYPosition() - 10);
                 ctx.drawImage(deathPlayerImage, player.getXPosition(), player.getYPosition());
             }else{
+                ctx.setFill(Color.WHITE);
+                ctx.fillText(player.getName(),player.getXPosition(),player.getYPosition() - 10);
+                ctx.setFill(Color.BLUEVIOLET);
                 ctx.fillRect(player.getXPosition(),
                         player.getYPosition(),
                         player.getWidth(),
