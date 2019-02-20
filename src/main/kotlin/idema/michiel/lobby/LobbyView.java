@@ -1,5 +1,6 @@
 package idema.michiel.lobby;
 
+import com.sun.javafx.css.Stylesheet;
 import idema.michiel.lobby.dto.ChooseNameToServerDTO;
 import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
@@ -9,14 +10,18 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class LobbyView extends Application {
 
@@ -32,16 +37,24 @@ public class LobbyView extends Application {
         Application.launch();
     }
 
-    public void start(Stage stage) {
+    public void start(Stage stage){
         this.stage = stage;
         VBox root = new VBox();
+        String sheet = LobbyView.class.getResource("/css/lobby.css").toExternalForm();
+        root.getStylesheets().add(sheet);
+        root.setPadding(new Insets(10,200,20,200));
         Scene scene = new Scene(root);
+        Image img = new Image(LobbyView.class.getResource("/images/space.jpg").toExternalForm());
+        root.setBackground(new Background(new BackgroundImage(img,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT)));
 
-        playerTableLabel(root);
+        lobbyLabel(root);
         playerTable(root);
         chooseNameForm(root);
         playButton(root);
-        testButton(root);
 
         stage.setScene(scene);
         stage.show();
@@ -52,6 +65,7 @@ public class LobbyView extends Application {
         HBox chooseNameFormDiv = new HBox();
         TextField textField = chooseNameTextField(chooseNameFormDiv);
         chooseNameButton(chooseNameFormDiv, textField);
+        chooseNameFormDiv.setPadding(new Insets(10,0,10,0));
         root.getChildren().add(chooseNameFormDiv);
     }
 
@@ -80,12 +94,17 @@ public class LobbyView extends Application {
 
     private TextField chooseNameTextField(HBox div) {
         TextField textField = new TextField();
+        textField.setPrefWidth(200);
+        textField.setPrefHeight(25);
+        textField.setPadding(new Insets(0,5,0,0));
         div.getChildren().add(textField);
         return textField;
     }
 
     private void playButton(VBox root) {
         Button playButton = new Button("Play");
+        playButton.setPrefSize(275, 50);
+        playButton.getStyleClass().add("playButton");
         playButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 System.out.println("Play button clicked");
@@ -95,28 +114,23 @@ public class LobbyView extends Application {
         root.getChildren().add(playButton);
     }
 
-    private void testButton(VBox root) {
-        Button testButton = new Button("test");
-        testButton.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                System.out.println("test button clicked");
-            }
-        });
-        root.getChildren().add(testButton);
-    }
-
-    private void playerTableLabel(VBox root) {
-        Label playerTableLabel = new Label("Connected players");
-        playerTableLabel.setFont(new Font("Arial", 20));
+    private void lobbyLabel(VBox root) {
+        Label playerTableLabel = new Label("Space balls");
+        playerTableLabel.setFont(new Font("Arial Black", 30));
+        playerTableLabel.setStyle("-fx-text-fill: white;");
+        playerTableLabel.setPadding(new Insets(10,10,10,10));
+        playerTableLabel.setPrefWidth(275);
+        playerTableLabel.setAlignment(Pos.CENTER);
         root.getChildren().add(playerTableLabel);
     }
 
     private void playerTable(VBox root) {
-        TableColumn playerColumn = new TableColumn("Player");
+        TableColumn playerColumn = new TableColumn("Players");
         playerColumn.setCellValueFactory(new PropertyValueFactory<TablePlayer, String>("name"));
         table.getColumns().add(playerColumn);
         root.getChildren().add(table);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setPrefWidth(275);
         table.setItems(tableData);
     }
 
