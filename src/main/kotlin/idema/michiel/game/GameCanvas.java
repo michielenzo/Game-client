@@ -25,6 +25,8 @@ class GameCanvas extends Canvas {
     private final int heartWidth = 25;
     private final int heartHeight = 25;
 
+    private Image deathPlayerImage;
+
     private final int playerLivesDivX = 20;
     private final int playerLivesDivY = 20;
 
@@ -33,7 +35,7 @@ class GameCanvas extends Canvas {
         this.gameView = gameView;
         ctx = getGraphicsContext2D();
         setupInput();
-        loadImages();
+        loadHeartImage();
     }
 
     private void setupInput() {
@@ -89,13 +91,22 @@ class GameCanvas extends Canvas {
         });
     }
 
-    private void loadImages() {
-        heartImage = new Image(
-                GameCanvas.class.getResource("/images/heart.jpg").toExternalForm(),
+    private void loadHeartImage() {
+        heartImage = new Image(GameCanvas.class.getResource("/images/heart.jpg").toExternalForm(),
                 heartWidth,
                 heartHeight,
                 false,
                 false);
+    }
+
+    private void loadDeathPlayerImage(List<PlayerDTO> players) {
+        if(deathPlayerImage == null){
+            deathPlayerImage = new Image(GameCanvas.class.getResource("/images/skull.png").toExternalForm(),
+                    players.get(0).getWidth(),
+                    players.get(0).getHeight(),
+                    false,
+                    false);
+        }
     }
 
     void render(SendGameStateToClientsDTO dto){
@@ -139,13 +150,18 @@ class GameCanvas extends Canvas {
     }
 
     private void renderPlayers(List<PlayerDTO> players) {
+        loadDeathPlayerImage(players);
         ctx.setGlobalAlpha(1);
         ctx.setFill(Color.BLUEVIOLET);
         for(PlayerDTO player: players){
-            ctx.fillRect(player.getXPosition(),
-                    player.getYPosition(),
-                    player.getWidth(),
-                    player.getHeight());
+            if(player.getHealth() <= 0){
+                ctx.drawImage(deathPlayerImage, player.getXPosition(), player.getYPosition());
+            }else{
+                ctx.fillRect(player.getXPosition(),
+                        player.getYPosition(),
+                        player.getWidth(),
+                        player.getHeight());
+            }
         }
     }
 
