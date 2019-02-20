@@ -12,6 +12,7 @@ data class GameStateDTO(val players: MutableList<PlayerDTO> = mutableListOf(),
 data class PlayerDTO(val sessionId: String,
                      @Volatile var xPosition: Int,
                      @Volatile var yPosition: Int,
+                     val health: Int,
                      val width: Int,
                      val height: Int): DTO()
 
