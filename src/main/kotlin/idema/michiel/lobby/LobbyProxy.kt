@@ -48,7 +48,7 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
     private fun handleSendLobbyStateToClientsMessage(dto: SendLobbyStateToClientsDTO) {
         lobbyView.tableData.clear()
         dto.lobbyState.players.forEach { playerDTO ->
-            lobbyView.tableData.add(TablePlayer(playerDTO.name))
+            lobbyView.tableData.add(TablePlayer(playerDTO.name, playerDTO.status))
         }
     }
 

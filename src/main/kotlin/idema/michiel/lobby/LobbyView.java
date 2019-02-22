@@ -123,6 +123,11 @@ public class LobbyView extends Application {
         TableColumn playerColumn = new TableColumn("Players");
         playerColumn.setCellValueFactory(new PropertyValueFactory<TablePlayer, String>("name"));
         table.getColumns().add(playerColumn);
+
+        TableColumn statusColumn = new TableColumn("Status");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<TablePlayer, String>("status"));
+        table.getColumns().add(statusColumn);
+
         root.getChildren().add(table);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setPrefWidth(275);

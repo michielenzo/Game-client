@@ -52,6 +52,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
 
     @OnWebSocketMessage
     fun onMessage(message: String){
+        println(message)
         buildDTO(message).also {
             it?: return
             NetworkNewsPaper.broadcast(it)
