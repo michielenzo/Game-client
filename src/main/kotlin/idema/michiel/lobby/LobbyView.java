@@ -1,6 +1,5 @@
 package idema.michiel.lobby;
 
-import com.sun.javafx.css.Stylesheet;
 import idema.michiel.lobby.dto.ChooseNameToServerDTO;
 import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
@@ -26,14 +25,12 @@ public class LobbyView extends Application {
     private LobbyProxy proxy = new LobbyProxy(this);
 
     public Stage stage;
+    public Scene scene;
 
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
     public static final int MAX_LENGTH_PLAYER_NAME = 10;
 
-    public static void launch(){
-        Application.launch();
-    }
 
     public void start(Stage stage){
         this.stage = stage;
@@ -41,7 +38,7 @@ public class LobbyView extends Application {
         String sheet = LobbyView.class.getResource("/css/lobby.css").toExternalForm();
         root.getStylesheets().add(sheet);
         root.setPadding(new Insets(10,200,20,200));
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         Image img = new Image(LobbyView.class.getResource("/images/space.jpg").toExternalForm());
         root.setBackground(new Background(new BackgroundImage(img,
                 BackgroundRepeat.NO_REPEAT,

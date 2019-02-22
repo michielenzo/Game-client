@@ -28,7 +28,7 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
     private fun handleSendGameStateToClientsMessage(dto: SendGameStateToClientsDTO) {
         if(!isGameStarted){
             Platform.runLater {
-                lobbyView.stage.scene = GameView(VBox(), dto)
+                lobbyView.stage.scene = GameView(VBox())
                 Screen.getPrimary().visualBounds.also {screen ->
                     lobbyView.stage.x = (screen.maxX/2 - GameView.WIDTH/2)
                     lobbyView.stage.y = (screen.maxY/2 - GameView.HEIGHT/2)
