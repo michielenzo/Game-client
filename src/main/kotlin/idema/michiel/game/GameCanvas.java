@@ -2,6 +2,7 @@ package idema.michiel.game;
 
 import idema.michiel.game.dto.FireBallDTO;
 import idema.michiel.game.dto.PlayerDTO;
+import idema.michiel.game.dto.PowerUpDTO;
 import idema.michiel.game.dto.SendGameStateToClientsDTO;
 import idema.michiel.lobby.LobbyView;
 import javafx.scene.canvas.Canvas;
@@ -25,8 +26,10 @@ class GameCanvas extends Canvas {
     private final int heartHeight = 25;
 
     private Image deathPlayerImage;
-
     private Image backgroundImage;
+    private Image medKitImage;
+
+
 
     private final int playerLivesDivX = 20;
     private final int playerLivesDivY = 35;
@@ -38,6 +41,7 @@ class GameCanvas extends Canvas {
         canvasInput.initializeInput();
         loadHeartImage();
         loadBackgroundImage();
+        loadMedKitImage();
     }
 
     private void loadHeartImage() {
@@ -66,6 +70,14 @@ class GameCanvas extends Canvas {
                 false);
     }
 
+    private void loadMedKitImage(){
+        medKitImage = new Image(GameCanvas.class.getResource("/images/medkit.png").toExternalForm(),
+                40,
+                40,
+                false,
+                false);
+    }
+
     void render(SendGameStateToClientsDTO dto){
         renderGameState(dto);
         renderHUD(dto);
@@ -73,8 +85,25 @@ class GameCanvas extends Canvas {
 
     private void renderGameState(SendGameStateToClientsDTO dto) {
         background();
+        renderPowerUps(dto.getGameState().getPowerUps());
         renderPlayers(dto.getGameState().getPlayers());
         renderFireBalls(dto.getGameState().getFireBalls());
+    }
+
+    private void renderPowerUps(List<PowerUpDTO> powerUps) {
+        ctx.setGlobalAlpha(1);
+        ctx.setFill(Color.WHITE);
+        if(powerUps.size() > 0){
+            for(PowerUpDTO powerUp: powerUps){
+                ctx.fillRect(powerUp.getXPosition(),
+                             powerUp.getYPosition() + 7,
+                             powerUp.getWidth(),
+                             powerUp.getHeight() - 7);
+                ctx.drawImage(medKitImage,
+                              powerUp.getXPosition(),
+                              powerUp.getYPosition());
+            }
+        }
     }
 
     private void renderHUD(SendGameStateToClientsDTO dto){
