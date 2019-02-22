@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class LobbyView extends Application {
 
@@ -52,6 +53,12 @@ public class LobbyView extends Application {
         playButton(root);
 
         stage.setScene(scene);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent event) {
+                System.out.println("hallo");
+                System.exit(0);
+            }
+        });
         stage.show();
         new WebSocketClientEndPoint();
     }
