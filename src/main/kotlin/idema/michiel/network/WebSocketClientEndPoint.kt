@@ -1,6 +1,7 @@
 package idema.michiel.network
 
 import com.google.gson.Gson
+import idema.michiel.game.dto.BackToLobbyToClientDTO
 import idema.michiel.game.dto.SendGameStateToClientsDTO
 import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
@@ -78,8 +79,12 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
     private fun buildDTO(message: String): DTO? {
         JSON.convertStringToGSONObject(message).get(MessageType.MESSAGE_TYPE.value).asString.also{
             return when (it) {
-                MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> buildSendLobbyStateToClientsDTO(message)
-                MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> buildSendGameStateToClientsDTO(message)
+                MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
+                        SendLobbyStateToClientsDTO::class.java)
+                MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
+                        SendGameStateToClientsDTO::class.java)
+                MessageType.BACK_TO_LOBBY_TO_CLIENT.value -> Gson().fromJson(message,
+                        BackToLobbyToClientDTO::class.java)
                 else -> {
                     throw Exception(String()
                             .plus("Invalid message received: ")
@@ -89,14 +94,6 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
             }
         }
         return null
-    }
-
-    private fun buildSendGameStateToClientsDTO(message: String): DTO {
-        return Gson().fromJson(message, SendGameStateToClientsDTO::class.java)
-    }
-
-    private fun buildSendLobbyStateToClientsDTO(message: String): DTO {
-        return Gson().fromJson(message, SendLobbyStateToClientsDTO::class.java)
     }
 
 }

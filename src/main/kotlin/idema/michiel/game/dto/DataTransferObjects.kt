@@ -26,3 +26,7 @@ data class SendInputStateToServerDTO(val wKey: Boolean,
                                      val sKey: Boolean,
                                      val dKey: Boolean,
                                      val messageType: String = MessageType.SEND_INPUT_STATE_TO_SERVER.value): DTO()
+
+data class BackToLobbyToServerDTO(val messageType: String = MessageType.BACK_TO_LOBBY_TO_SERVER.value): DTO()
+
+data class BackToLobbyToClientDTO(val messageType: String = MessageType.BACK_TO_LOBBY_TO_CLIENT.value): DTO()

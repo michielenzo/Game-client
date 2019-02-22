@@ -1,5 +1,6 @@
 package idema.michiel.game;
 
+import idema.michiel.game.dto.BackToLobbyToServerDTO;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -26,7 +27,7 @@ public class GameInput {
             public void handle(KeyEvent event) {
                 initializePressedWASDKeys(event);
                 if(event.getCode().getName().equals("Esc")){
-                    //todo stuur terug naar lobby bericht naar de server
+                    PlayerInputNewsPaper.INSTANCE.broadcast(new BackToLobbyToServerDTO());
                 }
             }
 

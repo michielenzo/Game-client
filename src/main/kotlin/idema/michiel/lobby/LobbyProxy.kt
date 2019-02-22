@@ -1,6 +1,7 @@
 package idema.michiel.lobby
 
 import idema.michiel.game.GameView
+import idema.michiel.game.dto.BackToLobbyToClientDTO
 import idema.michiel.game.dto.SendGameStateToClientsDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber
@@ -22,7 +23,13 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
         when(dto){
             is SendLobbyStateToClientsDTO -> handleSendLobbyStateToClientsMessage(dto)
             is SendGameStateToClientsDTO -> handleSendGameStateToClientsMessage(dto)
+            is BackToLobbyToClientDTO -> handleBackToLobbyToClientMessage(dto)
         }
+    }
+
+    private fun handleBackToLobbyToClientMessage(dto: BackToLobbyToClientDTO) {
+        isGameStarted = false
+        Platform.runLater { lobbyView.stage.scene = lobbyView.scene }
     }
 
     private fun handleSendGameStateToClientsMessage(dto: SendGameStateToClientsDTO) {
