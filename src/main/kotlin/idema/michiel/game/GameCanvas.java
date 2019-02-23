@@ -28,6 +28,8 @@ class GameCanvas extends Canvas {
     private Image deathPlayerImage;
     private Image backgroundImage;
     private Image medKitImage;
+    private Image shieldPowerUpImage;
+    private Image shieldPlayerImage;
 
 
 
@@ -42,6 +44,7 @@ class GameCanvas extends Canvas {
         loadHeartImage();
         loadBackgroundImage();
         loadMedKitImage();
+        loadShieldImage();
     }
 
     private void loadHeartImage() {
@@ -78,6 +81,20 @@ class GameCanvas extends Canvas {
                 false);
     }
 
+    private void loadShieldImage(){
+        shieldPowerUpImage = new Image(GameCanvas.class.getResource("/images/rsshield.png").toExternalForm(),
+                54,
+                54,
+                false,
+                false);
+
+        shieldPlayerImage = new Image(GameCanvas.class.getResource("/images/rsshield.png").toExternalForm(),
+                74,
+                74,
+                false,
+                false);
+    }
+
     void render(SendGameStateToClientsDTO dto){
         renderGameState(dto);
         renderHUD(dto);
@@ -92,18 +109,33 @@ class GameCanvas extends Canvas {
 
     private void renderPowerUps(List<PowerUpDTO> powerUps) {
         ctx.setGlobalAlpha(1);
-        ctx.setFill(Color.WHITE);
         if(powerUps.size() > 0){
             for(PowerUpDTO powerUp: powerUps){
-                ctx.fillRect(powerUp.getXPosition(),
-                             powerUp.getYPosition() + 7,
-                             powerUp.getWidth(),
-                             powerUp.getHeight() - 7);
-                ctx.drawImage(medKitImage,
-                              powerUp.getXPosition(),
-                              powerUp.getYPosition());
+                if(powerUp.getType().equals("med_kit")){
+                    renderMedKit(powerUp);
+                }else if(powerUp.getType().equals("shield")){
+                    renderShield(powerUp);
+                }
             }
         }
+    }
+
+    private void renderShield(PowerUpDTO powerUp) {
+        ctx.setFill(Color.WHITE);
+        ctx.drawImage(shieldPowerUpImage,
+                powerUp.getXPosition()-7,
+                powerUp.getYPosition()-7);
+    }
+
+    private void renderMedKit(PowerUpDTO powerUp) {
+        ctx.setFill(Color.WHITE);
+        ctx.fillRect(powerUp.getXPosition(),
+                powerUp.getYPosition() + 7,
+                powerUp.getWidth(),
+                powerUp.getHeight() - 7);
+        ctx.drawImage(medKitImage,
+                powerUp.getXPosition(),
+                powerUp.getYPosition());
     }
 
     private void renderHUD(SendGameStateToClientsDTO dto){
@@ -153,6 +185,9 @@ class GameCanvas extends Canvas {
                         player.getYPosition(),
                         player.getWidth(),
                         player.getHeight());
+                if(player.getHasShield()){
+                    ctx.drawImage(shieldPlayerImage, player.getXPosition() - 7, player.getYPosition() - 7);
+                }
             }
         }
     }

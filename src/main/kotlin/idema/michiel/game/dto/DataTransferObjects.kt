@@ -15,6 +15,7 @@ data class PlayerDTO(val sessionId: String,
                      @Volatile var xPosition: Int,
                      @Volatile var yPosition: Int,
                      val health: Int,
+                     val hasShield: Boolean,
                      val width: Int,
                      val height: Int): DTO()
 
