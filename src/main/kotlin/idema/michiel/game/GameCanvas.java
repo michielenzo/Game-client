@@ -30,6 +30,7 @@ class GameCanvas extends Canvas {
     private Image medKitImage;
     private Image shieldPowerUpImage;
     private Image shieldPlayerImage;
+    private Image inverterImage;
 
 
 
@@ -45,6 +46,7 @@ class GameCanvas extends Canvas {
         loadBackgroundImage();
         loadMedKitImage();
         loadShieldImage();
+        loadInverterImage();
     }
 
     private void loadHeartImage() {
@@ -95,6 +97,14 @@ class GameCanvas extends Canvas {
                 false);
     }
 
+    private void loadInverterImage(){
+        inverterImage = new Image(GameCanvas.class.getResource("/images/arrows.png").toExternalForm(),
+                40,
+                40,
+                false,
+                false);
+    }
+
     void render(SendGameStateToClientsDTO dto){
         renderGameState(dto);
         renderHUD(dto);
@@ -115,9 +125,17 @@ class GameCanvas extends Canvas {
                     renderMedKit(powerUp);
                 }else if(powerUp.getType().equals("shield")){
                     renderShield(powerUp);
+                }else if(powerUp.getType().equals("inverter")){
+                    renderInverter(powerUp);
                 }
             }
         }
+    }
+
+    private void renderInverter(PowerUpDTO powerUp) {
+        ctx.drawImage(inverterImage,
+                powerUp.getXPosition(),
+                powerUp.getYPosition());
     }
 
     private void renderShield(PowerUpDTO powerUp) {
@@ -186,7 +204,7 @@ class GameCanvas extends Canvas {
                         player.getWidth(),
                         player.getHeight());
                 if(player.getHasShield()){
-                    ctx.drawImage(shieldPlayerImage, player.getXPosition() - 7, player.getYPosition() - 7);
+                    ctx.drawImage(shieldPlayerImage, player.getXPosition() - 13, player.getYPosition() - 13);
                 }
             }
         }
