@@ -8,5 +8,7 @@ enum class MessageType(val value: String) {
     SEND_INPUT_STATE_TO_SERVER("sendInputStateToServer"),
     CHOOSE_NAME_TO_SERVER("chooseNameToServer"),
     BACK_TO_LOBBY_TO_SERVER("backToLobbyToServer"),
-    BACK_TO_LOBBY_TO_CLIENT("backToLobbyToServer")
+    BACK_TO_LOBBY_TO_CLIENT("backToLobbyToServer"),
+    CHOOSE_GAMEMODE_TO_SERVER("chooseGameModeToServer");
+
 }

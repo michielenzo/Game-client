@@ -50,6 +50,9 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
         dto.lobbyState.players.forEach { playerDTO ->
             lobbyView.tableData.add(TablePlayer(playerDTO.name, playerDTO.status))
         }
+        Platform.runLater {
+            lobbyView.lobbyLabelProperty.set(dto.lobbyState.gameMode)
+        }
     }
 
 }

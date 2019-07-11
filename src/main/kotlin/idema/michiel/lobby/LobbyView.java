@@ -1,11 +1,15 @@
 package idema.michiel.lobby;
 
+import idema.michiel.game.GameMode;
+import idema.michiel.lobby.dto.ChooseGameModeToServerDTO;
 import idema.michiel.lobby.dto.ChooseNameToServerDTO;
 import idema.michiel.lobby.dto.StartGameToServerDTO;
 import idema.michiel.network.WebSocketClientEndPoint;
 import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.lobby.LobbyNewsPaper;
+import idema.michiel.utilities.DTO;
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -21,6 +25,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.util.Optional;
+
 public class LobbyView extends Application {
 
     private LobbyProxy proxy = new LobbyProxy(this);
@@ -31,6 +37,9 @@ public class LobbyView extends Application {
     private final TableView table = new TableView();
     public ObservableList<TablePlayer> tableData = FXCollections.observableArrayList();
     public static final int MAX_LENGTH_PLAYER_NAME = 10;
+
+    private Label lobbyLabel = new Label(GameMode.SPACE_BALLS.getValue());
+    public SimpleStringProperty lobbyLabelProperty = new SimpleStringProperty(GameMode.SPACE_BALLS.getValue());
 
 
     public void start(Stage stage){
@@ -50,6 +59,7 @@ public class LobbyView extends Application {
         lobbyLabel(root);
         playerTable(root);
         chooseNameForm(root);
+        chooseGameButton(root);
         playButton(root);
 
         stage.setScene(scene);
@@ -61,6 +71,37 @@ public class LobbyView extends Application {
         });
         stage.show();
         new WebSocketClientEndPoint();
+    }
+
+    private void chooseGameButton(VBox root) {
+        Button chooseGameButton = new Button("GameMode");
+        chooseGameButton.setPrefSize(275, 50);
+        chooseGameButton.getStyleClass().add("chooseGameButton");
+        chooseGameButton.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                System.out.println("Choose Game button clicked");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Choose GameMode");
+                alert.setHeaderText("Choose a GameMode");
+                alert.setGraphic(null);
+
+                ButtonType buttonSpaceBalls = new ButtonType("Space Balls");
+                ButtonType Game2 = new ButtonType("Game2");
+
+                alert.getButtonTypes().setAll(buttonSpaceBalls, Game2);
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                DTO dto = null;
+                if (result.get() == buttonSpaceBalls){
+                    dto = new ChooseGameModeToServerDTO(GameMode.SPACE_BALLS.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
+                } else if (result.get() == Game2) {
+                    dto = new ChooseGameModeToServerDTO(GameMode.GAME2.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
+                }
+                LobbyNewsPaper.INSTANCE.broadcast(dto);
+            }
+        });
+        root.getChildren().add(chooseGameButton);
     }
 
     private void chooseNameForm(VBox root) {
@@ -117,13 +158,13 @@ public class LobbyView extends Application {
     }
 
     private void lobbyLabel(VBox root) {
-        Label playerTableLabel = new Label("Space balls");
-        playerTableLabel.setFont(new Font("Arial Black", 30));
-        playerTableLabel.setStyle("-fx-text-fill: white;");
-        playerTableLabel.setPadding(new Insets(10,10,10,10));
-        playerTableLabel.setPrefWidth(275);
-        playerTableLabel.setAlignment(Pos.CENTER);
-        root.getChildren().add(playerTableLabel);
+        lobbyLabel.setFont(new Font("Arial Black", 30));
+        lobbyLabel.setStyle("-fx-text-fill: white;");
+        lobbyLabel.setPadding(new Insets(10,10,10,10));
+        lobbyLabel.setPrefWidth(275);
+        lobbyLabel.setAlignment(Pos.CENTER);
+        lobbyLabel.textProperty().bind(lobbyLabelProperty);
+        root.getChildren().add(lobbyLabel);
     }
 
     private void playerTable(VBox root) {

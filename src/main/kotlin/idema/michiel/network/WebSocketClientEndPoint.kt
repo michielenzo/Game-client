@@ -3,6 +3,7 @@ package idema.michiel.network
 import com.google.gson.Gson
 import idema.michiel.game.dto.BackToLobbyToClientDTO
 import idema.michiel.game.dto.SendGameStateToClientsDTO
+import idema.michiel.lobby.dto.ChooseGameModeToServerDTO
 import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.lobby.dto.StartGameToServerDTO
@@ -68,6 +69,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
         when(dto){
             is StartGameToServerDTO -> session.remote.sendString(JSON.convertDTOObjectToString(dto))
             is ChooseNameToServerDTO -> session.remote.sendString(JSON.convertDTOObjectToString(dto))
+            is ChooseGameModeToServerDTO -> session.remote.sendString(JSON.convertDTOObjectToString(dto))
         }
 
     }
