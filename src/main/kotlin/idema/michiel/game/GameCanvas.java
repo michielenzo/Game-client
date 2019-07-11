@@ -32,8 +32,6 @@ class GameCanvas extends Canvas {
     private Image shieldPlayerImage;
     private Image inverterImage;
 
-
-
     private final int playerLivesDivX = 20;
     private final int playerLivesDivY = 35;
 
