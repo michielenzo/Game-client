@@ -84,7 +84,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
             return when (it) {
                 MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
                         SendLobbyStateToClientsDTO::class.java)
-                MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
+                MessageType.SEND_SPACE_BALLS_GAME_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
                         SendSpaceBallsGameStateToClientsDTO::class.java)
                 MessageType.BACK_TO_LOBBY_TO_CLIENT.value -> Gson().fromJson(message,
                         BackToLobbyToClientDTO::class.java)
