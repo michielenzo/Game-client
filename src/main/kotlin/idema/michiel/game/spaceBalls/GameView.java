@@ -27,8 +27,8 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
     }
 
     public void notifyNetworkNews(@NotNull DTO dto) {
-        if(dto instanceof SendGameStateToClientsDTO){
-            if(gameCanvas != null)gameCanvas.render((SendGameStateToClientsDTO)dto);
+        if(dto instanceof SendSpaceBallsGameStateToClientsDTO){
+            if(gameCanvas != null)gameCanvas.render((SendSpaceBallsGameStateToClientsDTO)dto);
         }
     }
 

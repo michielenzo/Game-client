@@ -2,7 +2,7 @@ package idema.michiel.lobby
 
 import idema.michiel.game.spaceBalls.GameView
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
-import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO
+import idema.michiel.game.spaceBalls.dto.SendSpaceBallsGameStateToClientsDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber
 import idema.michiel.newspaper.network.NetworkNewsPaper
@@ -22,7 +22,7 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
     override fun notifyNetworkNews(dto: DTO) {
         when(dto){
             is SendLobbyStateToClientsDTO -> handleSendLobbyStateToClientsMessage(dto)
-            is SendGameStateToClientsDTO -> handleSendGameStateToClientsMessage(dto)
+            is SendSpaceBallsGameStateToClientsDTO -> handleSendGameStateToClientsMessage(dto)
             is BackToLobbyToClientDTO -> handleBackToLobbyToClientMessage(dto)
         }
     }
@@ -32,7 +32,7 @@ class LobbyProxy(private val lobbyView: LobbyView): INetworkNewsPaperSubscriber 
         Platform.runLater { lobbyView.stage.scene = lobbyView.scene }
     }
 
-    private fun handleSendGameStateToClientsMessage(dto: SendGameStateToClientsDTO) {
+    private fun handleSendGameStateToClientsMessage(dtoSpaceBalls: SendSpaceBallsGameStateToClientsDTO) {
         if(!isGameStarted){
             Platform.runLater {
                 lobbyView.stage.scene = GameView(VBox())

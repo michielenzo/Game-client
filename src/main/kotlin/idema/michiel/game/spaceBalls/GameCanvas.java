@@ -3,7 +3,7 @@ package idema.michiel.game.spaceBalls;
 import idema.michiel.game.spaceBalls.dto.FireBallDTO;
 import idema.michiel.game.spaceBalls.dto.PlayerDTO;
 import idema.michiel.game.spaceBalls.dto.PowerUpDTO;
-import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO;
+import idema.michiel.game.spaceBalls.dto.SendSpaceBallsGameStateToClientsDTO;
 import idema.michiel.lobby.LobbyView;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -103,12 +103,12 @@ class GameCanvas extends Canvas {
                 false);
     }
 
-    void render(SendGameStateToClientsDTO dto){
+    void render(SendSpaceBallsGameStateToClientsDTO dto){
         renderGameState(dto);
         renderHUD(dto);
     }
 
-    private void renderGameState(SendGameStateToClientsDTO dto) {
+    private void renderGameState(SendSpaceBallsGameStateToClientsDTO dto) {
         background();
         renderPowerUps(dto.getGameState().getPowerUps());
         renderPlayers(dto.getGameState().getPlayers());
@@ -154,7 +154,7 @@ class GameCanvas extends Canvas {
                 powerUp.getYPosition());
     }
 
-    private void renderHUD(SendGameStateToClientsDTO dto){
+    private void renderHUD(SendSpaceBallsGameStateToClientsDTO dto){
         final List<PlayerDTO> players = dto.getGameState().getPlayers();
         final int marginRightHeart = 7;
         final int marginBottomHeart = 15;

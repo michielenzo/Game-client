@@ -114,18 +114,16 @@ public class LobbyView extends Application {
 
     private void chooseNameButton(HBox div, final TextField textField) {
         Button button = new Button("Choose name");
-        button.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-                if(isChosenNameValid(textField.getText())){
-                    ChooseNameToServerDTO dto = new ChooseNameToServerDTO(null,
-                            textField.getText(),
-                            MessageType.CHOOSE_NAME_TO_SERVER.getValue());
-                    LobbyNewsPaper.INSTANCE.broadcast(dto);
-                }else{
-                    String error = "Invalid name, too long (max 10)";
-                    Alert alert = new Alert(Alert.AlertType.ERROR, error);
-                    alert.showAndWait();
-                }
+        button.setOnMousePressed(event -> {
+            if(isChosenNameValid(textField.getText())){
+                ChooseNameToServerDTO dto = new ChooseNameToServerDTO(null,
+                        textField.getText(),
+                        MessageType.CHOOSE_NAME_TO_SERVER.getValue());
+                LobbyNewsPaper.INSTANCE.broadcast(dto);
+            }else{
+                String error = "Invalid name, too long (max 10)";
+                Alert alert = new Alert(Alert.AlertType.ERROR, error);
+                alert.showAndWait();
             }
         });
         div.getChildren().add(button);

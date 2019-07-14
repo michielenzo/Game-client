@@ -3,8 +3,8 @@ package idema.michiel.game.spaceBalls.dto
 import idema.michiel.newspaper.MessageType
 import idema.michiel.utilities.DTO
 
-data class SendGameStateToClientsDTO(val gameState: GameStateDTO,
-                                     val messageType: String = MessageType.SEND_GAME_STATE_TO_CLIENTS.value): DTO()
+data class SendSpaceBallsGameStateToClientsDTO(val gameState: GameStateDTO,
+                                               val messageType: String = MessageType.SEND_GAME_STATE_TO_CLIENTS.value): DTO()
 
 data class GameStateDTO(val players: MutableList<PlayerDTO> = mutableListOf(),
                         val fireBalls: MutableList<FireBallDTO> = mutableListOf(),

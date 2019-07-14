@@ -2,7 +2,7 @@ package idema.michiel.network
 
 import com.google.gson.Gson
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
-import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO
+import idema.michiel.game.spaceBalls.dto.SendSpaceBallsGameStateToClientsDTO
 import idema.michiel.lobby.dto.ChooseGameModeToServerDTO
 import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
@@ -85,7 +85,7 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
                 MessageType.SEND_LOBBY_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
                         SendLobbyStateToClientsDTO::class.java)
                 MessageType.SEND_GAME_STATE_TO_CLIENTS.value -> Gson().fromJson(message,
-                        SendGameStateToClientsDTO::class.java)
+                        SendSpaceBallsGameStateToClientsDTO::class.java)
                 MessageType.BACK_TO_LOBBY_TO_CLIENT.value -> Gson().fromJson(message,
                         BackToLobbyToClientDTO::class.java)
                 else -> {
