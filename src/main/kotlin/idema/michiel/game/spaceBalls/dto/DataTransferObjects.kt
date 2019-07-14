@@ -1,4 +1,4 @@
-package idema.michiel.game.dto
+package idema.michiel.game.spaceBalls.dto
 
 import idema.michiel.newspaper.MessageType
 import idema.michiel.utilities.DTO

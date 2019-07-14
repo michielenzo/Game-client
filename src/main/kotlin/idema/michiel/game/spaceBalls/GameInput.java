@@ -1,6 +1,6 @@
-package idema.michiel.game;
+package idema.michiel.game.spaceBalls;
 
-import idema.michiel.game.dto.BackToLobbyToServerDTO;
+import idema.michiel.game.spaceBalls.dto.BackToLobbyToServerDTO;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;

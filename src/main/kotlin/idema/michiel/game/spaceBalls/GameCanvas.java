@@ -1,9 +1,9 @@
-package idema.michiel.game;
+package idema.michiel.game.spaceBalls;
 
-import idema.michiel.game.dto.FireBallDTO;
-import idema.michiel.game.dto.PlayerDTO;
-import idema.michiel.game.dto.PowerUpDTO;
-import idema.michiel.game.dto.SendGameStateToClientsDTO;
+import idema.michiel.game.spaceBalls.dto.FireBallDTO;
+import idema.michiel.game.spaceBalls.dto.PlayerDTO;
+import idema.michiel.game.spaceBalls.dto.PowerUpDTO;
+import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO;
 import idema.michiel.lobby.LobbyView;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;

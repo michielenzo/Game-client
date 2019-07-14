@@ -1,8 +1,8 @@
 package idema.michiel.lobby
 
-import idema.michiel.game.GameView
-import idema.michiel.game.dto.BackToLobbyToClientDTO
-import idema.michiel.game.dto.SendGameStateToClientsDTO
+import idema.michiel.game.spaceBalls.GameView
+import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
+import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber
 import idema.michiel.newspaper.network.NetworkNewsPaper

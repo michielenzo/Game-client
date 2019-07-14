@@ -96,7 +96,7 @@ public class LobbyView extends Application {
                 if (result.get() == buttonSpaceBalls){
                     dto = new ChooseGameModeToServerDTO(GameMode.SPACE_BALLS.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
                 } else if (result.get() == Game2) {
-                    dto = new ChooseGameModeToServerDTO(GameMode.GAME2.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
+                    dto = new ChooseGameModeToServerDTO(GameMode.ZOMBIES.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
                 }
                 LobbyNewsPaper.INSTANCE.broadcast(dto);
             }

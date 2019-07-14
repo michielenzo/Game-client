@@ -1,6 +1,6 @@
-package idema.michiel.game;
+package idema.michiel.game.spaceBalls;
 
-import idema.michiel.game.dto.*;
+import idema.michiel.game.spaceBalls.dto.*;
 import idema.michiel.lobby.LobbyView;
 import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber;
@@ -8,7 +8,6 @@ import idema.michiel.newspaper.network.NetworkNewsPaper;
 import idema.michiel.utilities.DTO;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 public class GameView extends Scene implements INetworkNewsPaperSubscriber {

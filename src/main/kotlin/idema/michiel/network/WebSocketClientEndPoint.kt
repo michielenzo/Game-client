@@ -1,8 +1,8 @@
 package idema.michiel.network
 
 import com.google.gson.Gson
-import idema.michiel.game.dto.BackToLobbyToClientDTO
-import idema.michiel.game.dto.SendGameStateToClientsDTO
+import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
+import idema.michiel.game.spaceBalls.dto.SendGameStateToClientsDTO
 import idema.michiel.lobby.dto.ChooseGameModeToServerDTO
 import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
