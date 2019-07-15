@@ -3,7 +3,7 @@ package idema.michiel.network
 import com.google.gson.Gson
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
 import idema.michiel.game.spaceBalls.dto.SendSpaceBallsGameStateToClientsDTO
-import idema.michiel.game.zombies.SendZombiesGameStateToClientsDTO
+import idema.michiel.game.zombies.dto.SendZombiesGameStateToClientsDTO
 import idema.michiel.lobby.dto.ChooseGameModeToServerDTO
 import idema.michiel.lobby.dto.ChooseNameToServerDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO

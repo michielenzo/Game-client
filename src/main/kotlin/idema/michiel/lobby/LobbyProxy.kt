@@ -2,7 +2,7 @@ package idema.michiel.lobby
 
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToClientDTO
 import idema.michiel.game.spaceBalls.dto.SendSpaceBallsGameStateToClientsDTO
-import idema.michiel.game.zombies.SendZombiesGameStateToClientsDTO
+import idema.michiel.game.zombies.dto.SendZombiesGameStateToClientsDTO
 import idema.michiel.lobby.dto.SendLobbyStateToClientsDTO
 import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber
 import idema.michiel.newspaper.network.NetworkNewsPaper
