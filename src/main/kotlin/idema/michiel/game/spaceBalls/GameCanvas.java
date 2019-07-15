@@ -1,5 +1,6 @@
 package idema.michiel.game.spaceBalls;
 
+import idema.michiel.game.engine.ImageLoader;
 import idema.michiel.game.spaceBalls.dto.FireBallDTO;
 import idema.michiel.game.spaceBalls.dto.PlayerDTO;
 import idema.michiel.game.spaceBalls.dto.PowerUpDTO;
@@ -40,67 +41,17 @@ class GameCanvas extends Canvas {
         this.gameView = gameView;
         ctx = getGraphicsContext2D();
         canvasInput.initializeInput();
-        loadHeartImage();
-        loadBackgroundImage();
-        loadMedKitImage();
-        loadShieldImage();
-        loadInverterImage();
+        loadImages();
     }
 
-    private void loadHeartImage() {
-        heartImage = new Image(GameCanvas.class.getResource("/images/heart.jpg").toExternalForm(),
-                heartWidth,
-                heartHeight,
-                false,
-                false);
-    }
-
-    private void loadDeathPlayerImage(List<PlayerDTO> players) {
-        if(deathPlayerImage == null){
-            deathPlayerImage = new Image(GameCanvas.class.getResource("/images/skull.png").toExternalForm(),
-                    players.get(0).getWidth(),
-                    players.get(0).getHeight(),
-                    false,
-                    false);
-        }
-    }
-
-    private void loadBackgroundImage(){
-        backgroundImage = new Image(GameCanvas.class.getResource("/images/space3.png").toExternalForm(),
-                WIDTH,
-                HEIGHT,
-                false,
-                false);
-    }
-
-    private void loadMedKitImage(){
-        medKitImage = new Image(GameCanvas.class.getResource("/images/medkit.png").toExternalForm(),
-                40,
-                40,
-                false,
-                false);
-    }
-
-    private void loadShieldImage(){
-        shieldPowerUpImage = new Image(GameCanvas.class.getResource("/images/rsshield.png").toExternalForm(),
-                54,
-                54,
-                false,
-                false);
-
-        shieldPlayerImage = new Image(GameCanvas.class.getResource("/images/rsshield.png").toExternalForm(),
-                74,
-                74,
-                false,
-                false);
-    }
-
-    private void loadInverterImage(){
-        inverterImage = new Image(GameCanvas.class.getResource("/images/arrows.png").toExternalForm(),
-                40,
-                40,
-                false,
-                false);
+    private void loadImages() {
+        heartImage = ImageLoader.INSTANCE.load("/images/heart.jpg", heartWidth, heartHeight);
+        backgroundImage = ImageLoader.INSTANCE.load("/images/space3.png", WIDTH, HEIGHT);
+        medKitImage = ImageLoader.INSTANCE.load("/images/medkit.png", 40, 40);
+        shieldPlayerImage = ImageLoader.INSTANCE.load("/images/rsshield.png", 74, 74);
+        shieldPowerUpImage = ImageLoader.INSTANCE.load("/images/rsshield.png", 54, 54);
+        inverterImage = ImageLoader.INSTANCE.load("/images/arrows.png", 40, 40);
+        deathPlayerImage = ImageLoader.INSTANCE.load("/images/skull.png", 65, 65);
     }
 
     void render(SendSpaceBallsGameStateToClientsDTO dto){
@@ -185,9 +136,7 @@ class GameCanvas extends Canvas {
     }
 
     private void renderPlayers(List<PlayerDTO> players) {
-        loadDeathPlayerImage(players);
         ctx.setGlobalAlpha(1);
-
         for(PlayerDTO player: players){
             if(player.getHealth() <= 0){
                 ctx.setFill(Color.WHITE);
