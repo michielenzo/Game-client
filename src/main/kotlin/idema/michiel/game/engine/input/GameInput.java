@@ -14,10 +14,6 @@ public class GameInput {
     }
 
     public void initializeInput(){
-        initializeKEYInput();
-    }
-
-    private void initializeKEYInput() {
         canvas.setOnKeyPressed(new KeyPressedEvent());
         canvas.setOnKeyReleased(new KeyReleasedEvent());
     }

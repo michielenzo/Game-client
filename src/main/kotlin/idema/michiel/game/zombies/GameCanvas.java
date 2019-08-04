@@ -22,6 +22,7 @@ public class GameCanvas extends Canvas {
         super(WIDTH, HEIGHT);
         this.gameView = gameView;
         ctx = getGraphicsContext2D();
+        canvasInput.initializeInput();
     }
 
     public void render(SendZombiesGameStateToClientsDTO dto) {

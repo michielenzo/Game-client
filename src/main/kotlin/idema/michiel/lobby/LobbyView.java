@@ -79,23 +79,22 @@ public class LobbyView extends Application {
         chooseGameButton.getStyleClass().add("chooseGameButton");
         chooseGameButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                System.out.println("Choose Game button clicked");
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Choose GameMode");
                 alert.setHeaderText("Choose a GameMode");
                 alert.setGraphic(null);
 
                 ButtonType buttonSpaceBalls = new ButtonType("Space Balls");
-                ButtonType Game2 = new ButtonType("Game2");
+                ButtonType buttonZombies = new ButtonType("Zombies");
 
-                alert.getButtonTypes().setAll(buttonSpaceBalls, Game2);
+                alert.getButtonTypes().setAll(buttonSpaceBalls, buttonZombies);
 
                 Optional<ButtonType> result = alert.showAndWait();
 
                 DTO dto = null;
                 if (result.get() == buttonSpaceBalls){
                     dto = new ChooseGameModeToServerDTO(GameMode.SPACE_BALLS.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
-                } else if (result.get() == Game2) {
+                } else if (result.get() == buttonZombies) {
                     dto = new ChooseGameModeToServerDTO(GameMode.ZOMBIES.getValue(), MessageType.CHOOSE_GAMEMODE_TO_SERVER.getValue());
                 }
                 LobbyNewsPaper.INSTANCE.broadcast(dto);

@@ -10,13 +10,13 @@ public class KeyPressedEvent implements EventHandler<KeyEvent> {
 
     @Override
     public void handle(KeyEvent event) {
-        initializePressedWASDKeys(event);
+        handlePressedWASDKeys(event);
         if(event.getCode().getName().equals("Esc")){
             PlayerInputNewsPaper.INSTANCE.broadcast(new BackToLobbyToServerDTO());
         }
     }
 
-    private void initializePressedWASDKeys(KeyEvent event) {
+    private void handlePressedWASDKeys(KeyEvent event) {
         final boolean wBefore = InputState.INSTANCE.getWKey();
         final boolean aBefore = InputState.INSTANCE.getAKey();
         final boolean sBefore = InputState.INSTANCE.getSKey();
