@@ -1,6 +1,9 @@
-package idema.michiel.game.spaceBalls;
+package idema.michiel.game.engine;
 
+import idema.michiel.game.spaceBalls.GameCanvas;
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToServerDTO;
+import idema.michiel.game.spaceBalls.dto.SendInputStateToServerDTO;
+import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
@@ -44,7 +47,7 @@ public class GameInput {
                 if(wBefore != wAfter || aBefore != aAfter ||
                         sBefore != sAfter || dBefore != dAfter
                 ){
-                    PlayerInputNewsPaper.INSTANCE.broadcast(canvas.gameView.buildSendInputStateToServerDTO());
+                    PlayerInputNewsPaper.INSTANCE.broadcast(buildSendInputStateToServerDTO());
                 }
             }
         });
@@ -54,7 +57,7 @@ public class GameInput {
         canvas.setOnKeyReleased(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
                 initializeReleaseWASDKeys(event);
-                PlayerInputNewsPaper.INSTANCE.broadcast(canvas.gameView.buildSendInputStateToServerDTO());
+                PlayerInputNewsPaper.INSTANCE.broadcast(buildSendInputStateToServerDTO());
             }
 
             private void initializeReleaseWASDKeys(KeyEvent event) {
@@ -79,5 +82,12 @@ public class GameInput {
         }
     }
 
-
+    SendInputStateToServerDTO buildSendInputStateToServerDTO() {
+        return new SendInputStateToServerDTO(
+                InputState.INSTANCE.getWKey(),
+                InputState.INSTANCE.getAKey(),
+                InputState.INSTANCE.getSKey(),
+                InputState.INSTANCE.getDKey(),
+                MessageType.SEND_INPUT_STATE_TO_SERVER.getValue());
+    }
 }

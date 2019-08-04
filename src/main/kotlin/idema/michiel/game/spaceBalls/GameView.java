@@ -32,14 +32,4 @@ public class GameView extends Scene implements INetworkNewsPaperSubscriber {
         }
     }
 
-    SendInputStateToServerDTO buildSendInputStateToServerDTO() {
-        return new SendInputStateToServerDTO(
-                InputState.INSTANCE.getWKey(),
-                InputState.INSTANCE.getAKey(),
-                InputState.INSTANCE.getSKey(),
-                InputState.INSTANCE.getDKey(),
-                MessageType.SEND_INPUT_STATE_TO_SERVER.getValue());
-    }
-
-
 }

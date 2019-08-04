@@ -1,4 +1,4 @@
-package idema.michiel.game.spaceBalls
+package idema.michiel.game.engine
 
 object InputState {
 

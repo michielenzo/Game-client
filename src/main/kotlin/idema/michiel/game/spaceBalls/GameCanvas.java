@@ -1,5 +1,6 @@
 package idema.michiel.game.spaceBalls;
 
+import idema.michiel.game.engine.GameInput;
 import idema.michiel.game.engine.ImageLoader;
 import idema.michiel.game.spaceBalls.dto.FireBallDTO;
 import idema.michiel.game.spaceBalls.dto.PlayerDTO;
