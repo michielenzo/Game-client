@@ -1,4 +1,4 @@
-package idema.michiel.game.engine
+package idema.michiel.game.engine.input
 
 object InputState {
 

@@ -1,6 +1,6 @@
 package idema.michiel.game.zombies;
 
-import idema.michiel.game.engine.GameInput;
+import idema.michiel.game.engine.input.GameInput;
 import idema.michiel.game.zombies.dto.PlayerDTO;
 import idema.michiel.game.zombies.dto.SendZombiesGameStateToClientsDTO;
 import javafx.scene.canvas.Canvas;
