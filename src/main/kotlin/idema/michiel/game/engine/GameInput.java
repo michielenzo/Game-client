@@ -12,7 +12,7 @@ public class GameInput {
 
     private GameCanvas canvas;
 
-    GameInput(GameCanvas canvas){
+    public GameInput(GameCanvas canvas){
         this.canvas = canvas;
     }
 
