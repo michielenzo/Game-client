@@ -1,18 +1,18 @@
 package idema.michiel.game.engine;
 
-import idema.michiel.game.spaceBalls.GameCanvas;
 import idema.michiel.game.spaceBalls.dto.BackToLobbyToServerDTO;
 import idema.michiel.game.spaceBalls.dto.SendInputStateToServerDTO;
 import idema.michiel.newspaper.MessageType;
 import idema.michiel.newspaper.playerinput.PlayerInputNewsPaper;
 import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 public class GameInput {
 
-    private GameCanvas canvas;
+    private Canvas canvas;
 
-    public GameInput(GameCanvas canvas){
+    public GameInput(Canvas canvas){
         this.canvas = canvas;
     }
 

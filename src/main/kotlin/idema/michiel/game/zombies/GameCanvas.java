@@ -1,5 +1,6 @@
 package idema.michiel.game.zombies;
 
+import idema.michiel.game.engine.GameInput;
 import idema.michiel.game.zombies.dto.PlayerDTO;
 import idema.michiel.game.zombies.dto.SendZombiesGameStateToClientsDTO;
 import javafx.scene.canvas.Canvas;
@@ -15,6 +16,7 @@ public class GameCanvas extends Canvas {
 
     private GraphicsContext ctx;
     private GameView gameView;
+    private GameInput canvasInput = new GameInput(this);
 
     GameCanvas(GameView gameView){
         super(WIDTH, HEIGHT);

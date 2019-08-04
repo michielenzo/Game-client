@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
-class GameCanvas extends Canvas {
+public class GameCanvas extends Canvas {
 
     private static final int WIDTH = 1100;
     private static final int HEIGHT = 700;
