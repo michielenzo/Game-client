@@ -1,8 +1,12 @@
 package idema.michiel.game.zombies;
 
+import idema.michiel.game.zombies.dto.PlayerDTO;
 import idema.michiel.game.zombies.dto.SendZombiesGameStateToClientsDTO;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
+import java.util.List;
 
 public class GameCanvas extends Canvas {
 
@@ -19,6 +23,13 @@ public class GameCanvas extends Canvas {
     }
 
     public void render(SendZombiesGameStateToClientsDTO dto) {
+        renderPlayers(dto.getGameState().getPlayers());
+    }
 
+    private void renderPlayers(List<PlayerDTO> players) {
+        for(PlayerDTO player: players){
+            ctx.setFill(Color.BLACK);
+            ctx.fillOval(player.getXPos(), player.getYPos(), 50, 50);
+        }
     }
 }

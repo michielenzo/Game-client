@@ -5,7 +5,7 @@ import idema.michiel.newspaper.network.INetworkNewsPaperSubscriber
 import idema.michiel.newspaper.network.NetworkNewsPaper
 import idema.michiel.utilities.DTO
 
-class Proxy(val gameCanvas: GameCanvas): INetworkNewsPaperSubscriber {
+class Proxy(private val gameCanvas: GameCanvas): INetworkNewsPaperSubscriber {
 
     init {
         NetworkNewsPaper.subscribe(this)

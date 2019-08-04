@@ -9,11 +9,13 @@ public class GameView extends Scene {
     public static final int HEIGHT = 700;
 
     private GameCanvas gameCanvas;
+    private Proxy proxy;
 
     public GameView(VBox root) {
         super(root);
         gameCanvas = new GameCanvas(this);
         root.getChildren().add(gameCanvas);
         gameCanvas.requestFocus();
+        proxy = new Proxy(gameCanvas);
     }
 }
