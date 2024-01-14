@@ -28,9 +28,8 @@ import java.net.URI
 @WebSocket
 class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperSubscriber{
 
-    private val serverUri = "ws://192.168.1.226:8080/player"
+    private val serverUri = "ws://localhost:8080/player"
     private lateinit var session: Session
-
     init {
         LobbyNewsPaper.subscribe(this)
         PlayerInputNewsPaper.subscribe(this)
@@ -46,12 +45,10 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
             ex.printStackTrace()
         }
     }
-
     @OnWebSocketConnect
     fun onConnect(session: Session){
         this.session = session
     }
-
     @OnWebSocketMessage
     fun onMessage(message: String){
         println(message)
@@ -101,5 +98,4 @@ class WebSocketClientEndPoint: ILobbyNewsPaperSubscriber, IPlayerInputNewsPaperS
         }
         return null
     }
-
 }
