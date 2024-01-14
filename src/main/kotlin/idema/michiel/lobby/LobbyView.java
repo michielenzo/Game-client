@@ -41,6 +41,9 @@ public class LobbyView extends Application {
     private Label lobbyLabel = new Label(GameMode.SPACE_BALLS.getValue());
     public SimpleStringProperty lobbyLabelProperty = new SimpleStringProperty(GameMode.SPACE_BALLS.getValue());
 
+    public static void main(String[] args){
+        LobbyView.launch();
+    }
 
     public void start(Stage stage){
         this.stage = stage;
